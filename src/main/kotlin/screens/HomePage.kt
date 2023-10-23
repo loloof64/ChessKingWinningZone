@@ -1,5 +1,6 @@
 package screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
@@ -23,11 +24,15 @@ fun HomePage(
                 })
         }
     ) {
-        Box(contentAlignment = Alignment.Center, modifier = modifier.fillMaxSize()) {
-            Button(onClick = {
-                navController.navigate(Screens.Game.name)
-            }) {
-                Text(strings.newGame)
+        Surface(
+            modifier = modifier.background(color = MaterialTheme.colors.background)
+        ) {
+            Box(contentAlignment = Alignment.Center, modifier = modifier.fillMaxSize()) {
+                Button(onClick = {
+                    navController.navigate(Screens.Game.name)
+                }) {
+                    Text(strings.newGame)
+                }
             }
         }
     }
