@@ -1,6 +1,5 @@
 package components
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -17,10 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import i18n.LocalStrings
 import i18n.Strings
-import logic.defaultPosition
 
 const val emptyCell = ' '
 
@@ -231,24 +228,4 @@ fun getContentDescriptionForPiece(pieceValue: Char, strings: Strings): String {
         'k' -> strings.blackKing
         else -> strings.emptyCell
     }
-}
-
-@Preview
-@Composable
-fun ChessBoardLowerLayerPreview() {
-    val piecesValues = defaultPosition.split(" ")[0].split("/").map { line ->
-        line.flatMap { value ->
-            if (value.isDigit()) {
-                List(value.digitToInt()) { emptyCell }
-            } else {
-                listOf(value)
-            }
-        }
-    }
-    LowerLayer(
-        cellSize = 300.dp,
-        reversed = false,
-        piecesValues = piecesValues,
-        isWhiteTurn = true,
-    )
 }

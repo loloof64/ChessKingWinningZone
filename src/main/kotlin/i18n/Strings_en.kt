@@ -25,5 +25,6 @@ val enStrings = Strings(
     blackRook = "Black rook",
     blackQueen = "Black queen",
     blackKing = "Black king",
-    newGame = "New game"
+    newGame = "New game",
+    reverseBoard = "Reverse board"
 )

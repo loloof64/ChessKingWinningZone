@@ -25,5 +25,6 @@ val esStrings = Strings(
     blackRook = "Torre negra",
     blackQueen = "Dama negra",
     blackKing = "Rey negro",
-    newGame = "Nuevo juego"
+    newGame = "Nuevo juego",
+    reverseBoard = "Girar el tablero"
     )

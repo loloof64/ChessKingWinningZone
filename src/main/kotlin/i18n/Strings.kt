@@ -28,6 +28,7 @@ data class Strings(
     val blackQueen: String,
     val blackKing: String,
     val newGame: String,
+    val reverseBoard: String,
 )
 
 val strings = mapOf(
