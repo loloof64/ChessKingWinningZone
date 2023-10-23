@@ -8,33 +8,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2dbdf7e1-99b5-4f34-a685-e16f2435816b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/logic/Exercise.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/chess_vectors/Chess_bdt45.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/chess_vectors/Chess_blt45.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/chess_vectors/Chess_kdt45.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/chess_vectors/Chess_klt45.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/chess_vectors/Chess_ndt45.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/chess_vectors/Chess_nlt45.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/chess_vectors/Chess_pdt45.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/chess_vectors/Chess_plt45.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/chess_vectors/Chess_qdt45.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/chess_vectors/Chess_qlt45.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/chess_vectors/Chess_rdt45.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/chess_vectors/Chess_rlt45.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/material_vectors/swap_vert.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/ChessBoard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/components/ChessBoard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings_en.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings_en.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings_es.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings_es.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings_fr.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings_fr.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/logic/ChessGame.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/logic/ChessGameLegalState.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/screens/GamePage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/screens/GamePage.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

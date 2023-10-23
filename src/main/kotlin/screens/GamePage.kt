@@ -31,7 +31,7 @@ fun GamePage(
     val strings = LocalStrings.current
     val exercise by rememberSaveable { mutableStateOf(generateExercise()) }
     val isWhiteTurn by rememberSaveable { mutableStateOf(exercise.isWhiteTurn) }
-    var reversed by rememberSaveable { mutableStateOf(false) }
+    var reversed by rememberSaveable { mutableStateOf(!exercise.isWhiteTurn) }
 
     Scaffold(
         topBar = {
