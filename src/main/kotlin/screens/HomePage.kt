@@ -28,7 +28,7 @@ fun HomePage(
     val navigator = LocalNavigator.currentOrThrow
     var showProgressBar by rememberSaveable { mutableStateOf(false) }
     var goToGamePageButtonActive by rememberSaveable { mutableStateOf(true) }
-    var showGenerationError by rememberSaveable{ mutableStateOf(false) }
+    var showGenerationError by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -41,11 +41,16 @@ fun HomePage(
         Surface(
             modifier = modifier.background(color = MaterialTheme.colors.background)
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxSize()) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
                 Box(contentAlignment = Alignment.Center, modifier = modifier.fillMaxWidth()) {
                     val scope = rememberCoroutineScope()
                     Button(onClick = {
                         scope.launch(Dispatchers.IO) {
+                            val outerScope = this
                             showGenerationError = false
                             goToGamePageButtonActive = false
                             showProgressBar = true
@@ -59,6 +64,7 @@ fun HomePage(
                                         showProgressBar = false
                                         goToGamePageButtonActive = true
                                         showGenerationError = true
+                                        outerScope.cancel()
                                         this.cancel()
                                     }
                                 }
