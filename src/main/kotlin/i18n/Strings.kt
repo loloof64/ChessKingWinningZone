@@ -7,6 +7,7 @@ data class Strings(
     val cancel: String,
     val homePageTitle: String,
     val gamePageTitle: String,
+    val solutionPageTitle: String,
     val goBack: String,
     val swapBoardOrientation: String,
     val close: String,

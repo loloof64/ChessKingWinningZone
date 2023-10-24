@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.loloof64"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 repositories {
     mavenCentral()
@@ -20,10 +20,11 @@ dependencies {
     // compose.desktop.currentOs should be used in launcher-sourceSet
     // (in a separate module for demo project and in testMain).
     // With compose.desktop.common you will also lose @Preview functionality
+    val voyagerVersion = "1.0.0-rc08"
     implementation(compose.desktop.currentOs)
+    implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
     implementation("cafe.adriel.lyricist:lyricist:1.5.0")
     implementation("io.github.wolfraam:chessgame:1.5")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 }
 
 compose.desktop {

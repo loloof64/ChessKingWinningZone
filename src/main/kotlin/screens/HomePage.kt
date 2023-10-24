@@ -7,14 +7,16 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import i18n.LocalStrings
 
 @Composable
 fun HomePage(
-    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     val strings = LocalStrings.current
+    val navigator = LocalNavigator.currentOrThrow
 
     Scaffold(
         topBar = {
@@ -29,7 +31,7 @@ fun HomePage(
         ) {
             Box(contentAlignment = Alignment.Center, modifier = modifier.fillMaxSize()) {
                 Button(onClick = {
-                    navController.navigate(Screens.Game.name)
+                    navigator.push(Game())
                 }) {
                     Text(strings.newGame)
                 }

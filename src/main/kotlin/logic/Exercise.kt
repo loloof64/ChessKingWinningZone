@@ -1,11 +1,11 @@
 package logic
 
+import androidx.compose.runtime.saveable.Saver
 import components.emptyCell
 import io.github.wolfraam.chessgame.ChessGame
 import io.github.wolfraam.chessgame.board.Board
 import io.github.wolfraam.chessgame.move.KingState
 import io.github.wolfraam.chessgame.move.MoveHelper
-import java.lang.StringBuilder
 import kotlin.random.Random
 
 enum class CellFile(val ascii: Char) {
@@ -29,7 +29,7 @@ enum class CellFile(val ascii: Char) {
                 'f' -> FileF
                 'g' -> FileG
                 'h' -> FileH
-                else -> throw  IllegalArgumentException("Unrecognized file $value")
+                else -> throw IllegalArgumentException("Unrecognized file $value")
             }
         }
     }
@@ -56,7 +56,7 @@ enum class CellRank(val ascii: Char) {
                 '6' -> Rank6
                 '7' -> Rank7
                 '8' -> Rank8
-                else -> throw  IllegalArgumentException("Unrecognized rank $value")
+                else -> throw IllegalArgumentException("Unrecognized rank $value")
             }
         }
     }
@@ -500,6 +500,42 @@ val expectedCells = mapOf(
     ),
 )
 
+fun List<Cell>.serializeCells(): String =
+    this.joinToString(separator = "|") {
+        it.asciiValue()
+    }
+
+fun String.deserializeCells(): List<Cell> =
+    if (this.isEmpty()) listOf() else this.split('|').map { serialized ->
+        Cell.fromAscii(serialized)
+    }
+
+
+class SelectedCells(val values: List<Cell> = listOf()) {
+
+    val serialized: String
+        get() = values.serializeCells()
+
+    fun toggleCell(cell: Cell): SelectedCells {
+        val newCellsValues = values.toMutableList()
+        if (values.contains(cell)) {
+            newCellsValues.remove(cell)
+        } else {
+            newCellsValues.add(cell)
+        }
+        return SelectedCells(newCellsValues)
+    }
+
+    companion object {
+        fun fromSerialized(string: String): SelectedCells = SelectedCells(string.deserializeCells())
+
+        val saver = Saver<SelectedCells, String>(
+            save = { it.serialized },
+            restore = { fromSerialized(it) }
+        )
+    }
+}
+
 fun ChessGame.isOppositeKingAttacked(): Boolean {
     val board = Board.fromFen(fen)
     val moveHelper = MoveHelper(board)
@@ -649,4 +685,30 @@ fun generateExercise(): Exercise {
 
     // we can return the exercise
     return Exercise(pieces = pieces, expectedCells = theExpectedCells, isWhiteTurn = weHaveWhite)
+}
+
+class Solution(val correctCells: List<Cell>, val missedCells: List<Cell>, val wrongCells: List<Cell>) {
+
+    companion object {
+        val saver = Saver<Solution, List<String>>(
+            save = {
+                listOf(
+                    it.correctCells.serializeCells(),
+                    it.missedCells.serializeCells(),
+                    it.wrongCells.serializeCells()
+                )
+            },
+            restore = {
+                Solution(
+                    correctCells = it[0].deserializeCells(),
+                    missedCells = it[1].deserializeCells(),
+                    wrongCells = it[2].deserializeCells()
+                )
+            }
+        )
+    }
+}
+
+fun solve(exercise: Exercise, selectedCells: List<Cell>): Solution {
+    return Solution(listOf(), listOf(), listOf())
 }

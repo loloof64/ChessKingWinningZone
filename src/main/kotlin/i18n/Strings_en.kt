@@ -1,7 +1,7 @@
 package i18n
 
 val enStrings = Strings(
-    validate = "OK",
+    validate = "Validate",
     cancel = "Cancel",
     homePageTitle = "Home",
     gamePageTitle = "Game page",
@@ -26,5 +26,6 @@ val enStrings = Strings(
     blackQueen = "Black queen",
     blackKing = "Black king",
     newGame = "New game",
-    reverseBoard = "Reverse board"
+    reverseBoard = "Reverse board",
+    solutionPageTitle = "Solution page",
 )

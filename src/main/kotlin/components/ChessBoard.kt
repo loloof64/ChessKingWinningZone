@@ -23,7 +23,7 @@ import i18n.Strings
 import logic.Cell
 import logic.CellFile
 import logic.CellRank
-import screens.SelectedCells
+import logic.SelectedCells
 
 const val emptyCell = ' '
 
@@ -99,7 +99,7 @@ private fun ChessBoardCellsLine(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        val selectedCells = SelectedCells.fromSerialized(selectedCellsSerialized).selectedCells
+        val selectedCells = SelectedCells.fromSerialized(selectedCellsSerialized).values
 
 
         ChessBoardVerticalLabel(text = rankLabel, cellSize = cellSize)

@@ -26,5 +26,6 @@ val frStrings = Strings(
     blackQueen = "Dame noire",
     blackKing = "Roi noir",
     newGame = "Nouvelle partie",
-    reverseBoard = "Tourner l'échiquier"
+    reverseBoard = "Tourner l'échiquier",
+    solutionPageTitle = "Page solution",
 )
