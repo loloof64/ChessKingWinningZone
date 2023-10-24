@@ -35,4 +35,5 @@ val enStrings = Strings(
     goodSquare = "Good square",
     wrongSquare = "Wrong square",
     missedSquare = "Missed square",
+    exerciseGenerationError = "Failed to generate exercise !"
 )

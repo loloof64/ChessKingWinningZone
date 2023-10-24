@@ -32,6 +32,7 @@ data class Strings(
     val goodSquare: String,
     val wrongSquare: String,
     val missedSquare: String,
+    val exerciseGenerationError: String,
 )
 
 val translationStrings = mapOf(

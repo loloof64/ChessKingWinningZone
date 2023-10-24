@@ -35,4 +35,5 @@ val esStrings = Strings(
     goodSquare = "Buena casilla",
     wrongSquare = "Mala casilla",
     missedSquare = "Casilla fallida",
+    exerciseGenerationError = "¡No se pudo generar el ejercicio!"
     )

@@ -35,4 +35,5 @@ val frStrings = Strings(
     goodSquare = "Bonne case",
     wrongSquare = "Mauvaise case",
     missedSquare = "Case manquée",
+    exerciseGenerationError = "Echec de génération de l'exercice !"
 )

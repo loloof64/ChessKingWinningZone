@@ -545,6 +545,9 @@ fun ChessGame.isOppositeKingAttacked(): Boolean {
 class Exercise(val pieces: List<List<Char>>, val expectedCells: List<Cell>, val isWhiteTurn: Boolean)
 
 fun generateExercise(): Exercise {
+    ///////////////////////////
+    println("--- Starting to generate exercise")
+    ///////////////////////////
     val random = Random.Default
     val pieces = MutableList(8) { MutableList(8) { emptyCell } }
     val weHaveWhite = random.nextBoolean()
@@ -611,6 +614,10 @@ fun generateExercise(): Exercise {
         } while (!isDone)
     }
 
+    ///////////////////////////
+    println("--- Placing enemy pawn")
+    ///////////////////////////
+
     // placing enemy pawn
     val enemyPawnRank = if (weHaveWhite) CellRank.Rank2 else CellRank.Rank7
 
@@ -631,6 +638,10 @@ fun generateExercise(): Exercise {
     }
 
     pieces[7 - enemyPawnCell.rank.ordinal][enemyPawnCell.file.ordinal] = if (weHaveWhite) 'p' else 'P'
+
+    ///////////////////////////
+    println("--- Placing enemy king")
+    ///////////////////////////
 
     // placing enemy king
 
@@ -661,11 +672,23 @@ fun generateExercise(): Exercise {
 
     pieces[7 - enemyKingRank.ordinal][enemyKingFile.ordinal] = if (weHaveWhite) 'k' else 'K'
 
+    ///////////////////////////
+    println("--- Placing our king")
+    ///////////////////////////
+
     // placing our king
     placePieceRandomly(if (weHaveWhite) 'K' else 'k')
 
+    ///////////////////////////
+    println("--- Placing our queen")
+    ///////////////////////////
+
     // placing our queen
     placePieceRandomly(if (weHaveWhite) 'Q' else 'q')
+
+    ///////////////////////////
+    println("--- Generating expected cells")
+    ///////////////////////////
 
     // getting the expected cells
     val companionKingSide = if (enemyPawnCell.file == CellFile.FileA || enemyPawnCell.file == CellFile.FileH) {
@@ -682,6 +705,10 @@ fun generateExercise(): Exercise {
         cell = enemyPawnCell,
         companionKingSide = companionKingSide
     )]!!
+
+    ///////////////////////////
+    println("--- exercise generated")
+    ///////////////////////////
 
     // we can return the exercise
     return Exercise(pieces = pieces, expectedCells = theExpectedCells, isWhiteTurn = weHaveWhite)
