@@ -71,7 +71,7 @@ fun GamePage(
                     Box(contentAlignment = Alignment.Center) {
                         Button(onClick = {
                             val solution = solve(exercise = exercise, selectedCells = selectedCells.values)
-                            navigator.push(Solution(solutionData = solution, exercise = exercise))
+                            navigator.replace(Solution(solutionData = solution, exercise = exercise))
                         }) {
                             Text(strings.validate)
                         }

@@ -7,6 +7,10 @@ plugins {
     id("com.google.devtools.ksp") version "1.8.20-1.0.11"
 }
 
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("--enable-preview")
+}
+
 group = "com.loloof64"
 version = "1.0"
 
