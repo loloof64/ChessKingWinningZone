@@ -15,9 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import cafe.adriel.lyricist.LocalStrings
 import components.ChessBoard
 import components.SolutionLegend
-import i18n.LocalStrings
 import logic.Exercise
 import logic.Solution
 

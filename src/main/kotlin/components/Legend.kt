@@ -9,10 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.lyricist.LocalStrings
 import common.missedCellColor
 import common.rightCellColor
 import common.wrongCellColor
-import i18n.LocalStrings
 
 val textsSize = 30.sp
 val colorSquaresSize = 30.dp

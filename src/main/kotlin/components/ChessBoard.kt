@@ -18,7 +18,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
-import i18n.LocalStrings
+import cafe.adriel.lyricist.LocalStrings
+import cafe.adriel.lyricist.rememberStrings
+import common.*
 import i18n.Strings
 import logic.*
 
@@ -215,13 +217,6 @@ private fun ChessBoardCell(
     isMissedCell: Boolean,
     onCellClicked: (CellFile, CellRank) -> Unit,
 ) {
-    val whiteCellColor = Color(0xFFFFDEAD)
-    val blackCellColor = Color(0xFFCD853F)
-    val selectedColor = Color(0XFF2EFE9A)
-    val rightCellColor = Color(0xff206c10)
-    val wrongCellColor = Color(0xffcb0b26)
-    val missedCellColor = Color(0xff1e1c1c)
-
     val strings = LocalStrings.current
     var bgColor = if (isWhite) whiteCellColor else blackCellColor
     if (isSelected) bgColor = selectedColor

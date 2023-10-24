@@ -1,7 +1,5 @@
 package i18n
 
-import androidx.compose.runtime.staticCompositionLocalOf
-
 data class Strings(
     val validate: String,
     val cancel: String,
@@ -36,10 +34,8 @@ data class Strings(
     val missedSquare: String,
 )
 
-val strings = mapOf(
+val translationStrings = mapOf(
     "en" to enStrings,
-    "fr" to frStrings,
     "es" to esStrings,
+    "fr" to frStrings,
 )
-
-val LocalStrings = staticCompositionLocalOf { enStrings }

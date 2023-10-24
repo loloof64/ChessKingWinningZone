@@ -1,5 +1,8 @@
 package i18n
 
+import cafe.adriel.lyricist.LyricistStrings
+
+@LyricistStrings(languageTag = "es")
 val esStrings = Strings(
     validate = "Confirmar",
     cancel = "Cancelar",
