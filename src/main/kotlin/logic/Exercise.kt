@@ -544,10 +544,9 @@ fun ChessGame.isOppositeKingAttacked(): Boolean {
 
 class Exercise(val pieces: List<List<Char>>, val expectedCells: List<Cell>, val isWhiteTurn: Boolean)
 
-fun generateExercise(): Exercise {
-    ///////////////////////////
-    println("--- Starting to generate exercise")
-    ///////////////////////////
+fun generateExercise(onProgression: (Double) -> Unit): Exercise {
+    onProgression(0.0)
+
     val random = Random.Default
     val pieces = MutableList(8) { MutableList(8) { emptyCell } }
     val weHaveWhite = random.nextBoolean()
@@ -600,9 +599,14 @@ fun generateExercise(): Exercise {
 
     fun placePieceRandomly(pieceType: Char) {
         var isDone = false
+        val triedCells = mutableListOf<Cell>()
         do {
             val fileOrdinal = random.nextInt(8)
             val rankOrdinal = random.nextInt(8)
+            val file = CellFile.values()[fileOrdinal]
+            val rank = CellRank.values()[rankOrdinal]
+            val cell = Cell(file = file, rank = rank)
+            if (triedCells.contains(cell)) continue
             val isOccupied = pieces[7 - rankOrdinal][fileOrdinal] != emptyCell
             if (!isOccupied) {
                 pieces[7 - rankOrdinal][fileOrdinal] = pieceType
@@ -611,12 +615,13 @@ fun generateExercise(): Exercise {
                     isDone = true
                 }
             }
+            if (!isDone) {
+                triedCells.add(cell)
+            }
         } while (!isDone)
     }
 
-    ///////////////////////////
-    println("--- Placing enemy pawn")
-    ///////////////////////////
+    onProgression(1 / 6.0)
 
     // placing enemy pawn
     val enemyPawnRank = if (weHaveWhite) CellRank.Rank2 else CellRank.Rank7
@@ -639,9 +644,7 @@ fun generateExercise(): Exercise {
 
     pieces[7 - enemyPawnCell.rank.ordinal][enemyPawnCell.file.ordinal] = if (weHaveWhite) 'p' else 'P'
 
-    ///////////////////////////
-    println("--- Placing enemy king")
-    ///////////////////////////
+    onProgression(2 / 6.0)
 
     // placing enemy king
 
@@ -672,23 +675,17 @@ fun generateExercise(): Exercise {
 
     pieces[7 - enemyKingRank.ordinal][enemyKingFile.ordinal] = if (weHaveWhite) 'k' else 'K'
 
-    ///////////////////////////
-    println("--- Placing our king")
-    ///////////////////////////
+    onProgression(3 / 6.0)
 
     // placing our king
     placePieceRandomly(if (weHaveWhite) 'K' else 'k')
 
-    ///////////////////////////
-    println("--- Placing our queen")
-    ///////////////////////////
+    onProgression(4 / 6.0)
 
     // placing our queen
     placePieceRandomly(if (weHaveWhite) 'Q' else 'q')
 
-    ///////////////////////////
-    println("--- Generating expected cells")
-    ///////////////////////////
+    onProgression(5 / 6.0)
 
     // getting the expected cells
     val companionKingSide = if (enemyPawnCell.file == CellFile.FileA || enemyPawnCell.file == CellFile.FileH) {
@@ -706,9 +703,7 @@ fun generateExercise(): Exercise {
         companionKingSide = companionKingSide
     )]!!
 
-    ///////////////////////////
-    println("--- exercise generated")
-    ///////////////////////////
+    onProgression(6 / 6.0)
 
     // we can return the exercise
     return Exercise(pieces = pieces, expectedCells = theExpectedCells, isWhiteTurn = weHaveWhite)

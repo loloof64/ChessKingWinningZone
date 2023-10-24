@@ -29,6 +29,7 @@ fun HomePage(
     var showProgressBar by rememberSaveable { mutableStateOf(false) }
     var goToGamePageButtonActive by rememberSaveable { mutableStateOf(true) }
     var showGenerationError by rememberSaveable { mutableStateOf(false) }
+    var progression by rememberSaveable { mutableStateOf(0.0) }
 
     Scaffold(
         topBar = {
@@ -51,6 +52,7 @@ fun HomePage(
                     Button(onClick = {
                         scope.launch(Dispatchers.IO) {
                             val outerScope = this
+                            progression = 0.0
                             showGenerationError = false
                             goToGamePageButtonActive = false
                             showProgressBar = true
@@ -61,6 +63,7 @@ fun HomePage(
                             launch {
                                 timer.collect {
                                     if (it >= 5) {
+                                        progression = 0.0
                                         showProgressBar = false
                                         goToGamePageButtonActive = true
                                         showGenerationError = true
@@ -69,7 +72,10 @@ fun HomePage(
                                     }
                                 }
                             }
-                            val exercise = generateExercise()
+                            val exercise = generateExercise(onProgression = {
+                                progression = it
+                            })
+                            progression = 0.0
                             showProgressBar = false
                             goToGamePageButtonActive = true
                             navigator.push(Game(exercise = exercise))
@@ -78,7 +84,7 @@ fun HomePage(
                         Text(strings.newGame)
                     }
                     if (showProgressBar) {
-                        CircularProgressIndicator(modifier = Modifier.size(40.dp))
+                        CircularProgressIndicator(modifier = Modifier.size(40.dp), progress = progression.toFloat())
                     }
                 }
                 if (showGenerationError) {
