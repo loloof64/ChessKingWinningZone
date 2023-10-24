@@ -6,13 +6,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,8 +16,41 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import components.ChessBoard
 import i18n.LocalStrings
+import logic.Cell
 import logic.generateExercise
-import org.jetbrains.skia.ColorFilter
+
+class SelectedCells(val selectedCells: List<Cell> = listOf()) {
+
+    val serialized: String
+        get() =
+            selectedCells.joinToString(separator = "|") {
+                it.asciiValue()
+            }
+
+    fun toggleCell(cell: Cell): SelectedCells {
+        val newCellsValues = selectedCells.toMutableList()
+        if (selectedCells.contains(cell)) {
+            newCellsValues.remove(cell)
+        } else {
+            newCellsValues.add(cell)
+        }
+        return SelectedCells(newCellsValues)
+    }
+
+    companion object {
+        fun fromSerialized(string: String): SelectedCells {
+            val newCellsValues = if (string.isEmpty()) listOf() else string.split('|').map { serialized ->
+                Cell.fromAscii(serialized)
+            }
+            return SelectedCells(newCellsValues)
+        }
+
+        val saver = Saver<SelectedCells, String>(
+            save = { it.serialized },
+            restore = { fromSerialized(it) }
+        )
+    }
+}
 
 @Composable
 fun GamePage(
@@ -32,6 +61,8 @@ fun GamePage(
     val exercise by rememberSaveable { mutableStateOf(generateExercise()) }
     val isWhiteTurn by rememberSaveable { mutableStateOf(exercise.isWhiteTurn) }
     var reversed by rememberSaveable { mutableStateOf(!exercise.isWhiteTurn) }
+    var selectedCells = rememberSaveable(saver = SelectedCells.saver) { SelectedCells() }
+    var selectedCellsSerialized by remember { mutableStateOf(selectedCells.serialized) }
 
     Scaffold(
         topBar = {
@@ -59,7 +90,13 @@ fun GamePage(
                 ChessBoard(
                     piecesValues = exercise.pieces,
                     isWhiteTurn = isWhiteTurn,
-                    reversed = reversed
+                    reversed = reversed,
+                    selectedCellsSerialized = selectedCellsSerialized,
+                    onCellClicked = { file, rank ->
+                        val clickedCell = Cell(file = file, rank = rank)
+                        selectedCells = selectedCells.toggleCell(clickedCell)
+                        selectedCellsSerialized = selectedCells.serialized
+                    }
                 )
             }
         }

@@ -8,26 +8,58 @@ import io.github.wolfraam.chessgame.move.MoveHelper
 import java.lang.StringBuilder
 import kotlin.random.Random
 
-enum class CellFile {
-    FileA,
-    FileB,
-    FileC,
-    FileD,
-    FileE,
-    FileF,
-    FileG,
-    FileH
+enum class CellFile(val ascii: Char) {
+    FileA('a'),
+    FileB('b'),
+    FileC('c'),
+    FileD('d'),
+    FileE('e'),
+    FileF('f'),
+    FileG('g'),
+    FileH('h');
+
+    companion object {
+        fun fromAscii(value: Char): CellFile {
+            return when (value) {
+                'a' -> FileA
+                'b' -> FileB
+                'c' -> FileC
+                'd' -> FileD
+                'e' -> FileE
+                'f' -> FileF
+                'g' -> FileG
+                'h' -> FileH
+                else -> throw  IllegalArgumentException("Unrecognized file $value")
+            }
+        }
+    }
 }
 
-enum class CellRank {
-    Rank1,
-    Rank2,
-    Rank3,
-    Rank4,
-    Rank5,
-    Rank6,
-    Rank7,
-    Rank8
+enum class CellRank(val ascii: Char) {
+    Rank1('1'),
+    Rank2('2'),
+    Rank3('3'),
+    Rank4('4'),
+    Rank5('5'),
+    Rank6('6'),
+    Rank7('7'),
+    Rank8('8');
+
+    companion object {
+        fun fromAscii(value: Char): CellRank {
+            return when (value) {
+                '1' -> Rank1
+                '2' -> Rank2
+                '3' -> Rank3
+                '4' -> Rank4
+                '5' -> Rank5
+                '6' -> Rank6
+                '7' -> Rank7
+                '8' -> Rank8
+                else -> throw  IllegalArgumentException("Unrecognized rank $value")
+            }
+        }
+    }
 }
 
 enum class CompanionKingSide {
@@ -36,7 +68,17 @@ enum class CompanionKingSide {
     InLongSide,
 }
 
-data class Cell(val file: CellFile, val rank: CellRank)
+data class Cell(val file: CellFile, val rank: CellRank) {
+    fun asciiValue(): String {
+        return "${file.ascii}${rank.ascii}"
+    }
+
+    companion object {
+        fun fromAscii(it: String): Cell {
+            return Cell(file = CellFile.fromAscii(it[0]), rank = CellRank.fromAscii(it[1]))
+        }
+    }
+}
 
 data class EnemyPawnConfiguration(val isWhiteSide: Boolean, val cell: Cell, val companionKingSide: CompanionKingSide)
 

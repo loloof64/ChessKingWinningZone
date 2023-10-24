@@ -1,8 +1,10 @@
 package components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.onClick
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -18,6 +20,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import i18n.LocalStrings
 import i18n.Strings
+import logic.Cell
+import logic.CellFile
+import logic.CellRank
+import screens.SelectedCells
 
 const val emptyCell = ' '
 
@@ -26,6 +32,8 @@ fun ChessBoard(
     piecesValues: List<List<Char>>,
     isWhiteTurn: Boolean,
     reversed: Boolean,
+    selectedCellsSerialized: String,
+    onCellClicked: (CellFile, CellRank) -> Unit = { _, _ -> }
 ) {
     val bgColor = Color(0xFF9999FF)
     BoxWithConstraints {
@@ -41,6 +49,8 @@ fun ChessBoard(
                 reversed = reversed,
                 piecesValues = piecesValues,
                 isWhiteTurn = isWhiteTurn,
+                selectedCellsSerialized = selectedCellsSerialized,
+                onCellClicked = onCellClicked,
             )
         }
     }
@@ -52,6 +62,8 @@ private fun LowerLayer(
     reversed: Boolean,
     piecesValues: List<List<Char>>,
     isWhiteTurn: Boolean,
+    selectedCellsSerialized: String,
+    onCellClicked: (CellFile, CellRank) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         ChessBoardHorizontalLabels(cellSize = cellSize, whiteTurn = null, reversed = reversed)
@@ -63,7 +75,8 @@ private fun LowerLayer(
             ChessBoardCellsLine(
                 cellSize = cellSize, firstCellWhite = firstIsWhite,
                 rankLabel = rankLabel, rowPiecesValues = rowPiecesValues,
-                reversed = reversed,
+                reversed = reversed, onCellClicked = onCellClicked,
+                selectedCellsSerialized = selectedCellsSerialized, rowIndex = rowIndex,
             )
         }
         ChessBoardHorizontalLabels(cellSize = cellSize, whiteTurn = isWhiteTurn, reversed = reversed)
@@ -77,18 +90,30 @@ private fun ChessBoardCellsLine(
     rankLabel: String,
     rowPiecesValues: List<Char>,
     reversed: Boolean,
+    rowIndex: Int,
+    selectedCellsSerialized: String,
+    onCellClicked: (CellFile, CellRank) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        val selectedCells = SelectedCells.fromSerialized(selectedCellsSerialized).selectedCells
+
+
         ChessBoardVerticalLabel(text = rankLabel, cellSize = cellSize)
         (0..7).forEach { colIndex ->
+            val cellFile = CellFile.values()[if (reversed) 7 - colIndex else colIndex]
+            val cellRank = CellRank.values()[if (reversed) rowIndex else 7 - rowIndex]
             ChessBoardCell(
                 isWhite = if ((colIndex % 2) == 0) firstCellWhite else !firstCellWhite,
                 size = cellSize,
                 pieceValue = rowPiecesValues[if (reversed) 7 - colIndex else colIndex],
+                onCellClicked = onCellClicked,
+                file = cellFile,
+                rank = cellRank,
+                isSelected = selectedCells.contains(Cell(file = cellFile, rank = cellRank))
             )
         }
         ChessBoardVerticalLabel(text = rankLabel, cellSize = cellSize)
@@ -164,20 +189,29 @@ private fun ChessBoardHorizontalLabels(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ChessBoardCell(
     modifier: Modifier = Modifier,
     isWhite: Boolean,
     size: Dp,
     pieceValue: Char,
+    file: CellFile,
+    rank: CellRank,
+    isSelected: Boolean,
+    onCellClicked: (CellFile, CellRank) -> Unit,
 ) {
     val whiteCellColor = 0xFFFFDEAD
     val blackCellColor = 0xFFCD853F
+    val selectedColor = 0XFF2EFE9A
 
     val strings = LocalStrings.current
-    val bgColor = if (isWhite) Color(whiteCellColor) else Color(blackCellColor)
+    var bgColor = if (isWhite) Color(whiteCellColor) else Color(blackCellColor)
+    if (isSelected) bgColor = Color(selectedColor)
 
-    Surface(modifier = modifier.size(size)) {
+    Surface(modifier = modifier.size(size).onClick {
+        onCellClicked(file, rank)
+    }) {
         Column(modifier = Modifier.background(bgColor)) {
             val noPiece = pieceValue == emptyCell
             if (!noPiece) {
