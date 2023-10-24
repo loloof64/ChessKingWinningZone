@@ -8,9 +8,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2dbdf7e1-99b5-4f34-a685-e16f2435816b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/common/Constants.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/components/Legend.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/ChessBoard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/components/ChessBoard.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings_en.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings_en.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings_es.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings_es.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings_fr.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/i18n/Strings_fr.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/logic/Exercise.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/logic/Exercise.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/screens/GamePage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/screens/GamePage.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/screens/SolutionPage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/screens/SolutionPage.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -27,5 +27,9 @@ val esStrings = Strings(
     blackKing = "Rey negro",
     newGame = "Nuevo juego",
     reverseBoard = "Girar el tablero",
-    solutionPageTitle = "Página de solución"
+    solutionPageTitle = "Página de solución",
+    legend = "Leyenda",
+    goodSquare = "Buena casilla",
+    wrongSquare = "Mala casilla",
+    missedSquare = "Casilla fallida",
     )

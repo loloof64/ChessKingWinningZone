@@ -28,4 +28,8 @@ val frStrings = Strings(
     newGame = "Nouvelle partie",
     reverseBoard = "Tourner l'échiquier",
     solutionPageTitle = "Page solution",
+    legend = "Légende",
+    goodSquare = "Bonne case",
+    wrongSquare = "Mauvaise case",
+    missedSquare = "Case manquée",
 )

@@ -28,4 +28,8 @@ val enStrings = Strings(
     newGame = "New game",
     reverseBoard = "Reverse board",
     solutionPageTitle = "Solution page",
+    legend = "Legend",
+    goodSquare = "Good square",
+    wrongSquare = "Wrong square",
+    missedSquare = "Missed square",
 )

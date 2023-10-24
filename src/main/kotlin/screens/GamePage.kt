@@ -18,17 +18,14 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import components.ChessBoard
 import i18n.LocalStrings
-import logic.Cell
-import logic.SelectedCells
-import logic.generateExercise
-import logic.solve
+import logic.*
 
 @Composable
 fun GamePage(
     modifier: Modifier = Modifier,
 ) {
     val strings = LocalStrings.current
-    val exercise by rememberSaveable { mutableStateOf(generateExercise()) }
+    val exercise = rememberSaveable(saver = Exercise.saver) { generateExercise() }
     val isWhiteTurn by rememberSaveable { mutableStateOf(exercise.isWhiteTurn) }
     var reversed by rememberSaveable { mutableStateOf(!exercise.isWhiteTurn) }
     var selectedCells = rememberSaveable(saver = SelectedCells.saver) { SelectedCells() }

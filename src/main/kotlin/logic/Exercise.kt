@@ -1,6 +1,7 @@
 package logic
 
 import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.listSaver
 import components.emptyCell
 import io.github.wolfraam.chessgame.ChessGame
 import io.github.wolfraam.chessgame.board.Board
@@ -542,7 +543,30 @@ fun ChessGame.isOppositeKingAttacked(): Boolean {
     return moveHelper.getKingState(board.sideToMove.flip(), false) == KingState.CHECK
 }
 
-class Exercise(val pieces: List<List<Char>>, val expectedCells: List<Cell>, val isWhiteTurn: Boolean)
+fun Boolean.serializeTurn(): String {
+    return if (this) "1" else "0"
+}
+
+fun String.deserializeTurn(): Boolean {
+    return this == "1"
+}
+
+fun List<List<Char>>.serializeBoardCells(): String {
+    return this.joinToString(separator = "/") { it.joinToString(separator = "") }
+}
+
+fun String.deserializeBoardCells(): List<List<Char>> {
+    return this.split("/").map { line -> line.split("").map { elemStr -> elemStr[0] } }
+}
+
+class Exercise(val pieces: List<List<Char>>, val expectedCells: List<Cell>, val isWhiteTurn: Boolean){
+    companion object {
+        val saver = listSaver<Exercise, String>(
+            save = { listOf(it.pieces.serializeBoardCells(), it.expectedCells.serializeCells(), it.isWhiteTurn.serializeTurn()) },
+            restore = { Exercise(pieces = it[0].deserializeBoardCells(), expectedCells = it[1].deserializeCells(), isWhiteTurn = it[2].deserializeTurn()) }
+        )
+    }
+}
 
 fun generateExercise(): Exercise {
     val random = Random.Default
