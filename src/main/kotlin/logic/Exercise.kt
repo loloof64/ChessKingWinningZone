@@ -710,5 +710,23 @@ class Solution(val correctCells: List<Cell>, val missedCells: List<Cell>, val wr
 }
 
 fun solve(exercise: Exercise, selectedCells: List<Cell>): Solution {
-    return Solution(listOf(), listOf(), listOf())
+    val correctCells = mutableListOf<Cell>()
+    val wrongCells = mutableListOf<Cell>()
+    val missedCells = mutableListOf<Cell>()
+
+    for (rank in CellRank.values()) {
+        for (file in CellFile.values()) {
+            val matchingCell = Cell(file = file, rank = rank)
+            val isCorrectCell = selectedCells.contains(matchingCell) && exercise.expectedCells.contains(matchingCell)
+            val isWrongCell = selectedCells.contains(matchingCell) && !exercise.expectedCells.contains(matchingCell)
+            val isMissedCell = !selectedCells.contains(matchingCell) && exercise.expectedCells.contains(matchingCell)
+
+            if (isCorrectCell) correctCells.add(matchingCell)
+            if (isMissedCell) missedCells.add(matchingCell)
+            if (isWrongCell) wrongCells.add(matchingCell)
+        }
+    }
+
+
+    return Solution(correctCells.toList(), missedCells.toList(), wrongCells.toList())
 }

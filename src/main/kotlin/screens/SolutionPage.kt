@@ -21,7 +21,6 @@ import components.ChessBoard
 import i18n.LocalStrings
 import logic.Exercise
 import logic.Solution
-import logic.generateExercise
 
 @Composable
 fun SolutionPage(
@@ -61,6 +60,7 @@ fun SolutionPage(
                     isWhiteTurn = isWhiteTurn,
                     reversed = reversed,
                     selectedCellsSerialized = "",
+                    solution = solution,
                     onCellClicked = { _, _ ->
 
                     }

@@ -20,10 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import i18n.LocalStrings
 import i18n.Strings
-import logic.Cell
-import logic.CellFile
-import logic.CellRank
-import logic.SelectedCells
+import logic.*
 
 const val emptyCell = ' '
 
@@ -33,6 +30,7 @@ fun ChessBoard(
     isWhiteTurn: Boolean,
     reversed: Boolean,
     selectedCellsSerialized: String,
+    solution: Solution = Solution(listOf(), listOf(), listOf()),
     onCellClicked: (CellFile, CellRank) -> Unit = { _, _ -> }
 ) {
     val bgColor = Color(0xFF9999FF)
@@ -50,6 +48,7 @@ fun ChessBoard(
                 piecesValues = piecesValues,
                 isWhiteTurn = isWhiteTurn,
                 selectedCellsSerialized = selectedCellsSerialized,
+                solution = solution,
                 onCellClicked = onCellClicked,
             )
         }
@@ -63,6 +62,7 @@ private fun LowerLayer(
     piecesValues: List<List<Char>>,
     isWhiteTurn: Boolean,
     selectedCellsSerialized: String,
+    solution: Solution,
     onCellClicked: (CellFile, CellRank) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
@@ -77,6 +77,7 @@ private fun LowerLayer(
                 rankLabel = rankLabel, rowPiecesValues = rowPiecesValues,
                 reversed = reversed, onCellClicked = onCellClicked,
                 selectedCellsSerialized = selectedCellsSerialized, rowIndex = rowIndex,
+                solution = solution,
             )
         }
         ChessBoardHorizontalLabels(cellSize = cellSize, whiteTurn = isWhiteTurn, reversed = reversed)
@@ -92,6 +93,7 @@ private fun ChessBoardCellsLine(
     reversed: Boolean,
     rowIndex: Int,
     selectedCellsSerialized: String,
+    solution: Solution,
     onCellClicked: (CellFile, CellRank) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -106,6 +108,12 @@ private fun ChessBoardCellsLine(
         (0..7).forEach { colIndex ->
             val cellFile = CellFile.values()[if (reversed) 7 - colIndex else colIndex]
             val cellRank = CellRank.values()[if (reversed) rowIndex else 7 - rowIndex]
+            val matchingCell = Cell(file = cellFile, rank = cellRank)
+            val isSelected = selectedCells.contains(matchingCell)
+            val isGoodCell = solution.correctCells.contains(matchingCell)
+            val isWrongCell = solution.wrongCells.contains(matchingCell)
+            val isMissedCell = solution.missedCells.contains(matchingCell)
+
             ChessBoardCell(
                 isWhite = if ((colIndex % 2) == 0) firstCellWhite else !firstCellWhite,
                 size = cellSize,
@@ -113,7 +121,10 @@ private fun ChessBoardCellsLine(
                 onCellClicked = onCellClicked,
                 file = cellFile,
                 rank = cellRank,
-                isSelected = selectedCells.contains(Cell(file = cellFile, rank = cellRank))
+                isSelected = isSelected,
+                isGoodCell = isGoodCell,
+                isWrongCell = isWrongCell,
+                isMissedCell = isMissedCell,
             )
         }
         ChessBoardVerticalLabel(text = rankLabel, cellSize = cellSize)
@@ -199,15 +210,24 @@ private fun ChessBoardCell(
     file: CellFile,
     rank: CellRank,
     isSelected: Boolean,
+    isGoodCell: Boolean,
+    isWrongCell: Boolean,
+    isMissedCell: Boolean,
     onCellClicked: (CellFile, CellRank) -> Unit,
 ) {
-    val whiteCellColor = 0xFFFFDEAD
-    val blackCellColor = 0xFFCD853F
-    val selectedColor = 0XFF2EFE9A
+    val whiteCellColor = Color(0xFFFFDEAD)
+    val blackCellColor = Color(0xFFCD853F)
+    val selectedColor = Color(0XFF2EFE9A)
+    val rightCellColor = Color(0xff206c10)
+    val wrongCellColor = Color(0xffcb0b26)
+    val missedCellColor = Color(0xff1e1c1c)
 
     val strings = LocalStrings.current
-    var bgColor = if (isWhite) Color(whiteCellColor) else Color(blackCellColor)
-    if (isSelected) bgColor = Color(selectedColor)
+    var bgColor = if (isWhite) whiteCellColor else blackCellColor
+    if (isSelected) bgColor = selectedColor
+    if (isGoodCell) bgColor = rightCellColor
+    if (isMissedCell) bgColor = missedCellColor
+    if (isWrongCell) bgColor = wrongCellColor
 
     Surface(modifier = modifier.size(size).onClick {
         onCellClicked(file, rank)
