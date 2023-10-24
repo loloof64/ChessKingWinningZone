@@ -1,7 +1,6 @@
 package logic
 
 import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.listSaver
 import components.emptyCell
 import io.github.wolfraam.chessgame.ChessGame
 import io.github.wolfraam.chessgame.board.Board
@@ -543,30 +542,7 @@ fun ChessGame.isOppositeKingAttacked(): Boolean {
     return moveHelper.getKingState(board.sideToMove.flip(), false) == KingState.CHECK
 }
 
-fun Boolean.serializeTurn(): String {
-    return if (this) "1" else "0"
-}
-
-fun String.deserializeTurn(): Boolean {
-    return this == "1"
-}
-
-fun List<List<Char>>.serializeBoardCells(): String {
-    return this.joinToString(separator = "/") { it.joinToString(separator = "") }
-}
-
-fun String.deserializeBoardCells(): List<List<Char>> {
-    return this.split("/").map { line -> line.split("").map { elemStr -> elemStr[0] } }
-}
-
-class Exercise(val pieces: List<List<Char>>, val expectedCells: List<Cell>, val isWhiteTurn: Boolean){
-    companion object {
-        val saver = listSaver<Exercise, String>(
-            save = { listOf(it.pieces.serializeBoardCells(), it.expectedCells.serializeCells(), it.isWhiteTurn.serializeTurn()) },
-            restore = { Exercise(pieces = it[0].deserializeBoardCells(), expectedCells = it[1].deserializeCells(), isWhiteTurn = it[2].deserializeTurn()) }
-        )
-    }
-}
+class Exercise(val pieces: List<List<Char>>, val expectedCells: List<Cell>, val isWhiteTurn: Boolean)
 
 fun generateExercise(): Exercise {
     val random = Random.Default
@@ -711,27 +687,7 @@ fun generateExercise(): Exercise {
     return Exercise(pieces = pieces, expectedCells = theExpectedCells, isWhiteTurn = weHaveWhite)
 }
 
-class Solution(val correctCells: List<Cell>, val missedCells: List<Cell>, val wrongCells: List<Cell>) {
-
-    companion object {
-        val saver = Saver<Solution, List<String>>(
-            save = {
-                listOf(
-                    it.correctCells.serializeCells(),
-                    it.missedCells.serializeCells(),
-                    it.wrongCells.serializeCells()
-                )
-            },
-            restore = {
-                Solution(
-                    correctCells = it[0].deserializeCells(),
-                    missedCells = it[1].deserializeCells(),
-                    wrongCells = it[2].deserializeCells()
-                )
-            }
-        )
-    }
-}
+class Solution(val correctCells: List<Cell>, val missedCells: List<Cell>, val wrongCells: List<Cell>)
 
 fun solve(exercise: Exercise, selectedCells: List<Cell>): Solution {
     val correctCells = mutableListOf<Cell>()

@@ -23,9 +23,9 @@ import logic.*
 @Composable
 fun GamePage(
     modifier: Modifier = Modifier,
+    exercise: Exercise,
 ) {
     val strings = LocalStrings.current
-    val exercise = rememberSaveable(saver = Exercise.saver) { generateExercise() }
     val isWhiteTurn by rememberSaveable { mutableStateOf(exercise.isWhiteTurn) }
     var reversed by rememberSaveable { mutableStateOf(!exercise.isWhiteTurn) }
     var selectedCells = rememberSaveable(saver = SelectedCells.saver) { SelectedCells() }

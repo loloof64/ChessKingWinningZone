@@ -12,10 +12,10 @@ class Home : Screen {
     }
 }
 
-class Game : Screen {
+class Game(private val exercise: Exercise) : Screen {
     @Composable
     override fun Content() {
-        GamePage()
+        GamePage(exercise = exercise)
     }
 }
 
